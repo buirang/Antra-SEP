@@ -138,6 +138,7 @@ def repair_quarantined_records(
 def transform_raw(raw: DataFrame) -> DataFrame:
   
     return raw.select(
+        col("col").alias("value"),
         lit("files.training.databricks.com").alias("datasource"),
         current_timestamp().alias("ingesttime"),
         lit("new").alias("status"),
