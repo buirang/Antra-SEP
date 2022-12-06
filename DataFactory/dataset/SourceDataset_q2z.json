@@ -1,0 +1,17 @@
+{
+	"name": "SourceDataset_q2z",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "newcontainer"
+			}
+		}
+	}
+}
