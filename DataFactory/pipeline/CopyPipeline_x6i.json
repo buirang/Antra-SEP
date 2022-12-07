@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEach_x6i",
+				"name": "CreateNewpipeline",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
