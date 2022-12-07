@@ -1,0 +1,152 @@
+{
+	"name": "WWI",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_wxl",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_wxl",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "@{item().source.schema}.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "newcontainer//@{item().destination.fileName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"validateDataConsistency": false
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_wxl",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_schema": "@item().source.schema",
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDataset_wxl",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_fileName": "@item().destination.fileName"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"schema": "Application",
+							"table": "People"
+						},
+						"destination": {
+							"fileName": "ApplicationPeople.txt"
+						}
+					},
+					{
+						"source": {
+							"schema": "Sales",
+							"table": "Customers"
+						},
+						"destination": {
+							"fileName": "SalesCustomers.txt"
+						}
+					},
+					{
+						"source": {
+							"schema": "Sales",
+							"table": "Invoices"
+						},
+						"destination": {
+							"fileName": "SalesInvoices.txt"
+						}
+					},
+					{
+						"source": {
+							"schema": "Sales",
+							"table": "OrderLines"
+						},
+						"destination": {
+							"fileName": "SalesOrderLines.txt"
+						}
+					},
+					{
+						"source": {
+							"schema": "Sales",
+							"table": "Orders"
+						},
+						"destination": {
+							"fileName": "SalesOrders.txt"
+						}
+					},
+					{
+						"source": {
+							"schema": "Warehouse",
+							"table": "PackageTypes"
+						},
+						"destination": {
+							"fileName": "WarehousePackageTypes.txt"
+						}
+					},
+					{
+						"source": {
+							"schema": "Warehouse",
+							"table": "StockItems"
+						},
+						"destination": {
+							"fileName": "WarehouseStockItems.txt"
+						}
+					}
+				]
+			}
+		},
+		"annotations": []
+	}
+}
