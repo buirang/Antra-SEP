@@ -58,7 +58,7 @@
 									"referenceName": "SourceDataset_wxl",
 									"type": "DatasetReference",
 									"parameters": {
-										"cw_schema": "@item().source.schema",
+										"cw_schema": "String",
 										"cw_table": "@item().source.table"
 									}
 								}
