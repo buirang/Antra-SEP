@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEach_wxl",
+				"name": "OLTP",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
@@ -14,7 +14,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy_wxl",
+							"name": "OLTP1",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -40,15 +40,9 @@
 									"partitionOption": "None"
 								},
 								"sink": {
-									"type": "DelimitedTextSink",
-									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings"
-									},
-									"formatSettings": {
-										"type": "DelimitedTextWriteSettings",
-										"quoteAllText": true,
-										"fileExtension": ".txt"
-									}
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
 								},
 								"enableStaging": false,
 								"validateDataConsistency": false
@@ -65,10 +59,11 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DestinationDataset_wxl",
+									"referenceName": "SourceDataset_wxl",
 									"type": "DatasetReference",
 									"parameters": {
-										"cw_fileName": "@item().destination.fileName"
+										"cw_schema": "String",
+										"cw_table": "String"
 									}
 								}
 							]
