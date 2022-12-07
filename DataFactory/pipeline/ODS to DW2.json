@@ -1,0 +1,152 @@
+{
+	"name": "ODS to DW2",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_z2v",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_z2v",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "Dimension.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "newdata//@{item().destination.fileName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"validateDataConsistency": false
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_z2v",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDataset_z2v",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_fileName": "@item().destination.fileName"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "City"
+						},
+						"destination": {
+							"fileName": "DimensionCity.txt"
+						}
+					},
+					{
+						"source": {
+							"table": "Customer"
+						},
+						"destination": {
+							"fileName": "DimensionCustomer.txt"
+						}
+					},
+					{
+						"source": {
+							"table": "Date"
+						},
+						"destination": {
+							"fileName": "DimensionDate.txt"
+						}
+					},
+					{
+						"source": {
+							"table": "Employee"
+						},
+						"destination": {
+							"fileName": "DimensionEmployee.txt"
+						}
+					},
+					{
+						"source": {
+							"table": "Payment Method"
+						},
+						"destination": {
+							"fileName": "DimensionPayment%20Method.txt"
+						}
+					},
+					{
+						"source": {
+							"table": "Stock Item"
+						},
+						"destination": {
+							"fileName": "DimensionStock%20Item.txt"
+						}
+					},
+					{
+						"source": {
+							"table": "Supplier"
+						},
+						"destination": {
+							"fileName": "DimensionSupplier.txt"
+						}
+					},
+					{
+						"source": {
+							"table": "Transaction Type"
+						},
+						"destination": {
+							"fileName": "DimensionTransaction%20Type.txt"
+						}
+					}
+				]
+			}
+		},
+		"annotations": []
+	}
+}
