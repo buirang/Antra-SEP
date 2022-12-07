@@ -1,5 +1,5 @@
 {
-	"name": "OLTP to ODS",
+	"name": "ODS to DW",
 	"properties": {
 		"activities": [
 			{
@@ -164,76 +164,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"cw_items": {
-				"type": "Array",
-				"defaultValue": [
-					{
-						"source": {
-							"schema": "Application",
-							"table": "People"
-						},
-						"destination": {
-							"fileName": "ApplicationPeople.txt"
-						}
-					},
-					{
-						"source": {
-							"schema": "Sales",
-							"table": "Customers"
-						},
-						"destination": {
-							"fileName": "SalesCustomers.txt"
-						}
-					},
-					{
-						"source": {
-							"schema": "Sales",
-							"table": "Invoices"
-						},
-						"destination": {
-							"fileName": "SalesInvoices.txt"
-						}
-					},
-					{
-						"source": {
-							"schema": "Sales",
-							"table": "OrderLines"
-						},
-						"destination": {
-							"fileName": "SalesOrderLines.txt"
-						}
-					},
-					{
-						"source": {
-							"schema": "Sales",
-							"table": "Orders"
-						},
-						"destination": {
-							"fileName": "SalesOrders.txt"
-						}
-					},
-					{
-						"source": {
-							"schema": "Warehouse",
-							"table": "PackageTypes"
-						},
-						"destination": {
-							"fileName": "WarehousePackageTypes.txt"
-						}
-					},
-					{
-						"source": {
-							"schema": "Warehouse",
-							"table": "StockItems"
-						},
-						"destination": {
-							"fileName": "WarehouseStockItems.txt"
-						}
-					}
-				]
-			}
-		},
 		"annotations": []
 	}
 }

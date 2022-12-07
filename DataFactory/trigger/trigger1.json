@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "CopyPipeline_x6i",
+					"referenceName": "OLTP to ODS",
 					"type": "PipelineReference"
 				}
 			}
