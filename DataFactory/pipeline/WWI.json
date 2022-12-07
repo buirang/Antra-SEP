@@ -40,9 +40,15 @@
 									"partitionOption": "None"
 								},
 								"sink": {
-									"type": "AzureSqlSink",
-									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
 								},
 								"enableStaging": false,
 								"validateDataConsistency": false
@@ -59,12 +65,8 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "SourceDataset_wxl",
-									"type": "DatasetReference",
-									"parameters": {
-										"cw_schema": "String",
-										"cw_table": "String"
-									}
+									"referenceName": "DestinationDataset_q2z",
+									"type": "DatasetReference"
 								}
 							]
 						}
