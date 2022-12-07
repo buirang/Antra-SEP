@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEach_z2v",
+				"name": "Pipeline for dw",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
@@ -14,7 +14,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy_z2v",
+							"name": "DW",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
