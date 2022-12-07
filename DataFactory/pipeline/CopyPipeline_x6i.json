@@ -36,8 +36,15 @@
 							],
 							"typeProperties": {
 								"source": {
-									"type": "AzureSqlSource",
-									"partitionOption": "None"
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
 								},
 								"sink": {
 									"type": "DelimitedTextSink",
@@ -55,11 +62,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "SourceDataset_x6i",
+									"referenceName": "DestinationDataset_x6i",
 									"type": "DatasetReference",
 									"parameters": {
-										"cw_schema": "@item().source.schema",
-										"cw_table": "@item().source.table"
+										"cw_fileName": {
+											"value": "@pipeline().TriggerId",
+											"type": "Expression"
+										}
 									}
 								}
 							],
@@ -68,7 +77,85 @@
 									"referenceName": "DestinationDataset_x6i",
 									"type": "DatasetReference",
 									"parameters": {
-										"cw_fileName": "@item().destination.fileName"
+										"cw_fileName": {
+											"value": "@pipeline().GroupId",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "ODS",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "OLTP",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DestinationDataset_wxl",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_fileName": {
+											"value": "@pipeline().parameters.cw_items",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "SourceDataset_wxl",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_schema": {
+											"value": "@activity('OLTP').output",
+											"type": "Expression"
+										},
+										"cw_table": {
+											"value": "@activity('OLTP').outputcontains()pipeline().parameters.cw_itemsactivity('OLTP').output",
+											"type": "Expression"
+										}
 									}
 								}
 							]
