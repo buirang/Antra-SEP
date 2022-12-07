@@ -14,7 +14,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy_x6i",
+							"name": "OLTP",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
