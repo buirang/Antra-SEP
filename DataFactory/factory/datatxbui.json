@@ -1,9 +1,0 @@
-{
-	"name": "datatxbui",
-	"properties": {
-		"globalConfigurations": {
-			"PipelineBillingEnabled": "false"
-		}
-	},
-	"location": "eastus"
-}
