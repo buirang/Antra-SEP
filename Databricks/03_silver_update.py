@@ -196,8 +196,8 @@ display(bronzeQuarTransDF)
 
 data_movies_df = spark.read.table("data_movies").alias("user")
 repairDF = bronzeQuarTransDF.join(
-    health_tracker_user_df,
-    bronzeQuarTransDF.device_id == health_tracker_user_df.user_id,
+    data_movies_df,
+    bronzeQuarTransDF.device_id == data_movies_df.user_id,
 )
 display(repairDF)
 
